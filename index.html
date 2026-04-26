@@ -19,11 +19,31 @@
             padding: 2rem 1.5rem;
         }
 
-        .header {
+        /* ===== GAME SELECTION SCREEN (fanterOS style) ===== */
+        .game-selection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0f1e 0%, #0c1222 100%);
+            z-index: 20000;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .game-selection.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .game-selection .header {
             text-align: center;
             margin-bottom: 2rem;
         }
-        .header h1 {
+
+        .game-selection .header h1 {
             font-size: 2.6rem;
             background: linear-gradient(135deg, #f5e6b2, #ffcc66, #ffaa33);
             background-clip: text;
@@ -32,18 +52,21 @@
             letter-spacing: 2px;
             margin-bottom: 0.3rem;
         }
-        .header p {
+
+        .game-selection .header p {
             color: #8e9bbe;
             font-size: 0.9rem;
         }
-        .badge-row {
+
+        .game-selection .badge-row {
             display: flex;
             justify-content: center;
             gap: 0.8rem;
             margin-top: 0.8rem;
             flex-wrap: wrap;
         }
-        .badge {
+
+        .game-selection .badge {
             background: rgba(255, 204, 102, 0.15);
             border: 1px solid rgba(255, 204, 102, 0.3);
             border-radius: 40px;
@@ -52,7 +75,7 @@
             color: #ffdd99;
         }
 
-        .toolbar {
+        .game-selection .toolbar {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -60,7 +83,8 @@
             margin-bottom: 2rem;
             align-items: center;
         }
-        .search-box {
+
+        .game-selection .search-box {
             background: rgba(20, 28, 48, 0.8);
             backdrop-filter: blur(6px);
             border: 1px solid rgba(255, 204, 102, 0.35);
@@ -71,14 +95,17 @@
             gap: 0.7rem;
             transition: all 0.2s;
         }
-        .search-box:focus-within {
+
+        .game-selection .search-box:focus-within {
             border-color: #ffcc66;
             box-shadow: 0 0 12px rgba(255, 204, 102, 0.2);
         }
-        .search-box span {
+
+        .game-selection .search-box span {
             font-size: 1.1rem;
         }
-        #searchInput {
+
+        .game-selection #searchInput {
             background: transparent;
             border: none;
             color: #f0e6d0;
@@ -86,10 +113,12 @@
             width: 260px;
             outline: none;
         }
-        #searchInput::placeholder {
+
+        .game-selection #searchInput::placeholder {
             color: #6a7a9e;
         }
-        .stats-badge {
+
+        .game-selection .stats-badge {
             background: #1e2a3a;
             padding: 0.4rem 1rem;
             border-radius: 40px;
@@ -98,13 +127,14 @@
             font-weight: 500;
             border: 1px solid rgba(255, 204, 102, 0.3);
         }
-        .stats-badge span {
+
+        .game-selection .stats-badge span {
             color: white;
             font-weight: bold;
             margin: 0 4px;
         }
 
-        .games-grid {
+        .game-selection .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.2rem;
@@ -112,7 +142,7 @@
             margin: 0 auto;
         }
 
-        .game-card {
+        .game-selection .game-card {
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -126,7 +156,8 @@
             position: relative;
             overflow: hidden;
         }
-        .game-card::before {
+
+        .game-selection .game-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -136,26 +167,30 @@
             background: linear-gradient(90deg, transparent, rgba(255, 204, 102, 0.12), transparent);
             transition: left 0.4s ease;
         }
-        .game-card:hover::before {
+
+        .game-selection .game-card:hover::before {
             left: 100%;
         }
-        .game-card:hover {
+
+        .game-selection .game-card:hover {
             transform: translateY(-4px) scale(1.01);
             border-color: #ffcc66;
             background: linear-gradient(115deg, #1e2a44, #141c30);
             box-shadow: 0 14px 28px -8px rgba(0,0,0,0.5), 0 0 0 1px rgba(255, 204, 102, 0.2) inset;
         }
 
-        .game-icon {
+        .game-selection .game-icon {
             font-size: 2rem;
             min-width: 52px;
             text-align: center;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
-        .game-info {
+
+        .game-selection .game-info {
             flex: 1;
         }
-        .game-title {
+
+        .game-selection .game-title {
             font-weight: 700;
             font-size: 0.95rem;
             color: #f5e6c4;
@@ -165,25 +200,28 @@
             gap: 6px;
             flex-wrap: wrap;
         }
-        .game-badge {
+
+        .game-selection .game-badge {
             background: rgba(255, 204, 102, 0.18);
             font-size: 0.6rem;
             padding: 2px 8px;
             border-radius: 20px;
             color: #ffdd99;
         }
-        .arrow-hint {
+
+        .game-selection .arrow-hint {
             opacity: 0.5;
             font-size: 0.75rem;
             transition: 0.2s;
         }
-        .game-card:hover .arrow-hint {
+
+        .game-selection .game-card:hover .arrow-hint {
             opacity: 1;
             transform: translateX(3px);
             color: #ffcc66;
         }
 
-        .no-results {
+        .game-selection .no-results {
             text-align: center;
             grid-column: 1 / -1;
             padding: 3rem;
@@ -192,7 +230,7 @@
             color: #9eafcf;
         }
 
-        .footer {
+        .game-selection .footer {
             text-align: center;
             margin-top: 3rem;
             font-size: 0.7rem;
@@ -201,6 +239,7 @@
             padding-top: 1.8rem;
         }
 
+        /* ===== FULLSCREEN EMULATOR MODAL ===== */
         .fullscreen-modal {
             display: none;
             position: fixed;
@@ -263,44 +302,52 @@
             object-fit: contain;
         }
 
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 640px) {
-            body { padding: 1rem; }
-            .games-grid { grid-template-columns: 1fr; }
-            .game-card { padding: 0.7rem 1rem; }
-            .game-icon { font-size: 1.6rem; min-width: 45px; }
-            .search-box #searchInput { width: 160px; }
+            .game-selection { padding: 1rem; }
+            .game-selection .games-grid { grid-template-columns: 1fr; }
+            .game-selection .game-card { padding: 0.7rem 1rem; }
+            .game-selection .game-icon { font-size: 1.6rem; min-width: 45px; }
+            .game-selection .search-box #searchInput { width: 160px; }
         }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>🎮 NDS HUB</h1>
-    <p>Nintendo DS — dual-screen gaming collection</p>
-    <div class="badge-row">
-        <div class="badge">🎮 Full NDS Library</div>
-        <div class="badge">⚡ Fullscreen Play</div>
-        <div class="badge">💾 Save States</div>
-        <div class="badge">🖱️ Touch Support</div>
+<!-- ===== GAME SELECTION SCREEN (fanterOS style) ===== -->
+<div id="gameSelection" class="game-selection">
+    <div class="header">
+        <h1>🎮 NDS HUB</h1>
+        <p>Nintendo DS — dual-screen gaming collection</p>
+        <div class="badge-row">
+            <div class="badge">🎮 Full NDS Library</div>
+            <div class="badge">⚡ Fullscreen Play</div>
+            <div class="badge">💾 Save States</div>
+            <div class="badge">🖱️ Touch Support</div>
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="search DS games...">
+        </div>
+        <div class="stats-badge">
+            📚 <span id="totalCount">0</span> DS games
+        </div>
+    </div>
+
+    <div id="gamesContainer" class="games-grid"></div>
+
+    <div class="footer">
+        <span>🎮 NDS Hub • Click any game to play in fullscreen</span>
     </div>
 </div>
 
-<div class="toolbar">
-    <div class="search-box">
-        <span>🔍</span>
-        <input type="text" id="searchInput" placeholder="search DS games...">
-    </div>
-    <div class="stats-badge">
-        📚 <span id="totalCount">0</span> DS games
-    </div>
-</div>
-
-<div id="gamesContainer" class="games-grid"></div>
-
-<div class="footer">
-    <span>🎮 NDS Hub • Click any game to play in fullscreen</span>
-</div>
-
+<!-- ===== FULLSCREEN EMULATOR MODAL ===== -->
 <div id="fullscreenModal" class="fullscreen-modal">
     <div class="fullscreen-header">
         <span class="fullscreen-title" id="fullscreenGameTitle">Nintendo DS Emulator</span>
@@ -472,6 +519,10 @@
         document.getElementById('fullscreenGameTitle').textContent = `${name} (Nintendo DS)`;
         document.getElementById('fullscreenModal').classList.add('active');
         
+        // Hide the selection screen (fade it out)
+        const selectionScreen = document.getElementById('gameSelection');
+        selectionScreen.classList.add('hide');
+        
         try {
             let blob = await downloadRomBlob(fileId, { textContent: '' });
             cacheRom(fileId, blob);
@@ -482,6 +533,7 @@
             console.error('Load error:', error);
             alert('Failed to load ROM: ' + error.message);
             document.getElementById('fullscreenModal').classList.remove('active');
+            selectionScreen.classList.remove('hide');
         }
     }
     
@@ -509,8 +561,12 @@
     function closeFullscreenEmulator() {
         const fullscreenModal = document.getElementById('fullscreenModal');
         const fullscreenEmulatorDiv = document.getElementById('fullscreenEmulator');
+        const selectionScreen = document.getElementById('gameSelection');
+        
         fullscreenModal.classList.remove('active');
         fullscreenEmulatorDiv.innerHTML = '';
+        selectionScreen.classList.remove('hide');
+        
         if (window.EJS_emulator) {
             try { window.EJS_emulator.destroy?.(); } catch(e) {}
             window.EJS_emulator = null;
@@ -619,10 +675,6 @@
             closeFullscreenEmulator();
         }
     });
-    
-    const style = document.createElement('style');
-    style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
-    document.head.appendChild(style);
     
     init();
 </script>
