@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>NDS Hub - Test</title>
+    <title>NDS Hub | fanterOS</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,11 +21,8 @@
             background-clip: text;
             color: transparent;
         }
-        .toolbar {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
+        .header p { color: #8e9bbe; margin-top: 8px; }
+        .toolbar { display: flex; justify-content: center; margin-bottom: 2rem; }
         .library-btn {
             background: linear-gradient(135deg, #7c5cff, #5a3cc9);
             border: none;
@@ -34,7 +31,10 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
         }
+        .library-btn:hover { transform: scale(1.02); box-shadow: 0 0 15px rgba(124, 92, 255, 0.4); }
+        
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -47,14 +47,28 @@
             align-items: center;
             gap: 1rem;
             background: rgba(25, 34, 55, 0.9);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 204, 102, 0.25);
             border-radius: 24px;
             padding: 0.9rem 1.2rem;
             cursor: pointer;
+            transition: all 0.2s;
         }
-        .game-card:hover { border-color: #ffcc66; background: #1e2a44; }
-        .game-icon { font-size: 2rem; min-width: 52px; }
-        .game-title { font-weight: 700; color: #f5e6c4; }
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: #ffcc66;
+            background: #1e2a44;
+        }
+        .game-icon { font-size: 2rem; min-width: 52px; text-align: center; }
+        .game-title { font-weight: 700; font-size: 0.95rem; color: #f5e6c4; }
+        .game-badge {
+            background: rgba(255, 204, 102, 0.18);
+            font-size: 0.6rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            color: #ffdd99;
+            margin-left: 8px;
+        }
         
         .modal {
             display: none;
@@ -72,36 +86,105 @@
         .modal.show { display: flex; }
         .modal-content {
             background: rgba(15, 15, 25, 0.95);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(124, 92, 255, 0.3);
             border-radius: 20px;
             padding: 20px;
-            width: min(400px, 90vw);
+            width: min(450px, 90vw);
             max-height: 85vh;
             overflow-y: auto;
         }
-        .modal-header { margin-bottom: 15px; }
+        .modal-header { margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
         .modal-title { color: #ffcc66; font-size: 20px; font-weight: 700; }
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(124, 92, 255, 0.3);
+            border-radius: 30px;
+            color: white;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .search-input:focus { outline: none; border-color: #ffcc66; }
+        .rom-count { color: #a0a0c0; font-size: 12px; margin-bottom: 10px; }
         .rom-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
+            padding: 10px 12px;
             background: rgba(0,0,0,0.3);
             border-radius: 12px;
             margin-bottom: 8px;
             cursor: pointer;
+            transition: all 0.15s;
         }
-        .rom-item:hover { background: rgba(124, 92, 255, 0.2); }
-        .rom-name { color: white; }
+        .rom-item:hover { background: rgba(124, 92, 255, 0.2); transform: translateX(4px); }
+        .rom-name { color: white; font-size: 13px; }
+        .rom-play {
+            background: linear-gradient(135deg, #7c5cff, #5a3cc9);
+            border: none;
+            border-radius: 20px;
+            padding: 4px 12px;
+            color: white;
+            font-size: 11px;
+            cursor: pointer;
+        }
         .modal-close {
             margin-top: 15px;
             padding: 10px;
-            background: #7c5cff;
-            border: none;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 30px;
             color: white;
             cursor: pointer;
             width: 100%;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.2); }
+        
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 10000;
+            flex-direction: column;
+        }
+        .fullscreen-modal.active { display: flex; }
+        .fullscreen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 204, 102, 0.3);
+            z-index: 10;
+        }
+        .fullscreen-title { color: #ffdd99; font-weight: 600; font-size: 0.9rem; }
+        .fullscreen-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0 10px;
+            transition: 0.2s;
+        }
+        .fullscreen-close:hover { color: #ffcc66; transform: scale(1.1); }
+        .fullscreen-content { flex: 1; display: flex; justify-content: center; align-items: center; background: #000; }
+        #fullscreenEmulator { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+        #fullscreenEmulator canvas { max-width: 100%; max-height: calc(100vh - 60px); object-fit: contain; }
+        
+        .status { text-align: center; margin-top: 20px; color: #a0a0c0; font-size: 12px; }
+        .now-playing { text-align: center; margin-top: 10px; color: #ffcc66; font-size: 12px; }
+        
+        @media (max-width: 640px) {
+            body { padding: 1rem; }
+            .games-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -109,6 +192,7 @@
 
 <div class="header">
     <h1>🎮 NDS HUB</h1>
+    <p>Nintendo DS — dual-screen gaming collection</p>
 </div>
 
 <div class="toolbar">
@@ -117,18 +201,35 @@
 
 <div id="gamesContainer" class="games-grid"></div>
 
+<div id="nowPlaying" class="now-playing" style="display: none;">🎮 Now Playing: <span id="nowPlayingName"></span></div>
+<div class="status" id="status">Click OPEN LIBRARY to browse ROMs</div>
+
+<!-- Library Modal -->
 <div class="modal" id="libraryModal">
     <div class="modal-content">
         <div class="modal-header">
             <div class="modal-title">ROM LIBRARY</div>
         </div>
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search games...">
+        <div class="rom-count" id="romCount">0 games</div>
         <div id="romList"></div>
         <button class="modal-close" id="closeModalBtn">Close</button>
     </div>
 </div>
 
+<!-- Fullscreen Emulator Modal -->
+<div id="fullscreenModal" class="fullscreen-modal">
+    <div class="fullscreen-header">
+        <span class="fullscreen-title" id="fullscreenGameTitle">Nintendo DS Emulator</span>
+        <button class="fullscreen-close" id="fullscreenCloseBtn">✕</button>
+    </div>
+    <div class="fullscreen-content">
+        <div id="fullscreenEmulator"></div>
+    </div>
+</div>
+
 <script>
-    // ============ YOUR GAMES - PUT YOUR FILE IDs HERE ============
+    // ============ YOUR GAMES - ADD YOUR FILE IDs HERE ============
     // To get a File ID: Right-click file in Google Drive → "Get link"
     // The ID is the long string in: https://drive.google.com/file/d/YOUR_ID_HERE/view
     
@@ -141,42 +242,178 @@
         { id: "", name: "New Super Mario Bros" }
     ];
     
-    // Display games in the library modal
+    let currentGameName = '';
+    let currentRomBlob = null;
+    let filteredGames = [...games];
+    
+    // ============ DOWNLOAD ROM FROM GOOGLE DRIVE ============
+    async function downloadRom(fileId) {
+        if (!fileId) throw new Error('No File ID provided');
+        
+        // Direct download from Google Drive
+        const url = `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`;
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Download failed: ${response.status}`);
+        
+        return await response.blob();
+    }
+    
+    // ============ LAUNCH EMULATOR ============
+    function launchEmulator(romUrl, gameName) {
+        const emulatorDiv = document.getElementById('fullscreenEmulator');
+        emulatorDiv.innerHTML = '';
+        
+        window.EJS_player = '#fullscreenEmulator';
+        window.EJS_core = 'nds';
+        window.EJS_gameName = gameName;
+        window.EJS_color = '#c41e3a';
+        window.EJS_startOnLoaded = true;
+        window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
+        window.EJS_gameUrl = romUrl;
+        window.EJS_buttons = { playPause: false, restart: true, mute: false, settings: true, fullscreen: true, saveState: true, loadState: true };
+        
+        const oldScript = document.querySelector('script[src*="emulatorjs"][src*="loader"]');
+        if (oldScript) oldScript.remove();
+        
+        const script = document.createElement('script');
+        script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
+        document.body.appendChild(script);
+        
+        document.getElementById('fullscreenModal').classList.add('active');
+        document.getElementById('nowPlayingName').textContent = gameName;
+        document.getElementById('nowPlaying').style.display = 'block';
+        document.getElementById('status').textContent = 'Emulator loading...';
+    }
+    
+    function closeEmulator() {
+        const modal = document.getElementById('fullscreenModal');
+        const emulatorDiv = document.getElementById('fullscreenEmulator');
+        modal.classList.remove('active');
+        emulatorDiv.innerHTML = '';
+        document.getElementById('status').textContent = 'Click OPEN LIBRARY to browse ROMs';
+        if (window.EJS_emulator) {
+            try { window.EJS_emulator.destroy?.(); } catch(e) {}
+            window.EJS_emulator = null;
+        }
+    }
+    
+    // ============ LOAD AND PLAY GAME ============
+    async function playGame(gameId, gameName) {
+        if (!gameId) {
+            alert(`No File ID for "${gameName}".\n\nRight-click the file in Google Drive → "Get link" → copy the ID.`);
+            return;
+        }
+        
+        document.getElementById('status').textContent = `Loading ${gameName}...`;
+        document.getElementById('libraryModal').classList.remove('show');
+        
+        try {
+            const blob = await downloadRom(gameId);
+            currentRomBlob = blob;
+            launchEmulator(URL.createObjectURL(blob), gameName);
+        } catch (error) {
+            console.error(error);
+            document.getElementById('status').textContent = `Failed to load ${gameName}`;
+            alert(`Failed to load ROM: ${error.message}\n\nMake sure:\n1. The File ID is correct\n2. The file is shared publicly`);
+        }
+    }
+    
+    // ============ RENDER LIBRARY ============
     function renderLibrary() {
         const romList = document.getElementById('romList');
+        const romCount = document.getElementById('romCount');
         
-        if (!romList) return;
+        romCount.textContent = `${filteredGames.length} games`;
+        
+        if (filteredGames.length === 0) {
+            romList.innerHTML = '<div style="text-align:center;padding:20px;color:#888;">No games found</div>';
+            return;
+        }
         
         romList.innerHTML = '';
         
-        games.forEach((game, index) => {
+        filteredGames.forEach((game, index) => {
             const gameDiv = document.createElement('div');
             gameDiv.className = 'rom-item';
             gameDiv.innerHTML = `
                 <span class="rom-name">${game.name}</span>
-                <span style="color:${game.id ? '#4cd964' : '#ff5e5e'}">${game.id ? '✅' : '❌ No ID'}</span>
+                <button class="rom-play" data-id="${game.id}" data-name="${game.name}">▶ Play</button>
             `;
-            gameDiv.onclick = () => {
-                if (game.id) {
-                    alert(`Playing: ${game.name}\nFile ID: ${game.id}\n\n(Emulator would launch here)`);
-                } else {
-                    alert(`No File ID set for "${game.name}".\n\nRight-click the file in Google Drive → "Get link" → copy the ID.`);
-                }
-            };
             romList.appendChild(gameDiv);
+        });
+        
+        // Add click handlers to play buttons
+        document.querySelectorAll('.rom-play').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute('data-id');
+                const name = btn.getAttribute('data-name');
+                playGame(id, name);
+            });
         });
     }
     
-    // Modal controls
-    const modal = document.getElementById('libraryModal');
-    document.getElementById('libraryBtn').onclick = () => {
+    // ============ SEARCH FUNCTION ============
+    function searchGames() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        if (!searchTerm) {
+            filteredGames = [...games];
+        } else {
+            filteredGames = games.filter(game => game.name.toLowerCase().includes(searchTerm));
+        }
         renderLibrary();
-        modal.classList.add('show');
-    };
-    document.getElementById('closeModalBtn').onclick = () => modal.classList.remove('show');
-    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('show'); };
+    }
     
-    console.log('NDS Hub loaded. Games in library:', games.length);
+    // ============ RENDER MAIN GRID ============
+    function renderGrid() {
+        const container = document.getElementById('gamesContainer');
+        container.innerHTML = games.map(game => `
+            <div class="game-card" data-id="${game.id}" data-name="${game.name}">
+                <div class="game-icon">🎮</div>
+                <div class="game-info">
+                    <div class="game-title">
+                        ${game.name}
+                        <span class="game-badge">NDS</span>
+                    </div>
+                    <div class="arrow-hint" style="opacity:0.5; font-size:0.75rem;">▶ play fullscreen</div>
+                </div>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = card.getAttribute('data-id');
+                const name = card.getAttribute('data-name');
+                playGame(id, name);
+            });
+        });
+    }
+    
+    // ============ EVENT LISTENERS ============
+    document.getElementById('libraryBtn').onclick = () => {
+        filteredGames = [...games];
+        renderLibrary();
+        document.getElementById('searchInput').value = '';
+        document.getElementById('libraryModal').classList.add('show');
+    };
+    
+    document.getElementById('closeModalBtn').onclick = () => document.getElementById('libraryModal').classList.remove('show');
+    document.getElementById('libraryModal').onclick = (e) => { if (e.target === document.getElementById('libraryModal')) document.getElementById('libraryModal').classList.remove('show'); };
+    
+    document.getElementById('fullscreenCloseBtn').onclick = closeEmulator;
+    document.getElementById('fullscreenModal').onclick = (e) => { if (e.target === document.getElementById('fullscreenModal')) closeEmulator(); };
+    document.addEventListener('keydown', (e) => {
+        if (document.getElementById('fullscreenModal').classList.contains('active') && e.key === 'Escape') {
+            closeEmulator();
+        }
+    });
+    
+    document.getElementById('searchInput').addEventListener('input', searchGames);
+    
+    // ============ INITIALIZE ============
+    renderGrid();
+    console.log('NDS Hub ready! Add your Google Drive File IDs to the games array.');
 </script>
 </body>
 </html>
