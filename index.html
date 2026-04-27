@@ -3,16 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>NDS Hub | Nintendo DS Game Library</title>
+    <title>NDS Hub | fanterOS</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: linear-gradient(135deg, #0a0f1e 0%, #0c1222 100%);
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
             min-height: 100vh;
             padding: 2rem 1.5rem;
         }
+
+        /* ===== FANTER GOLD/GLASS THEME ===== */
         .game-selection {
             position: fixed;
             top: 0;
@@ -25,8 +32,16 @@
             padding: 2rem 1.5rem;
             transition: opacity 0.3s ease;
         }
-        .game-selection.hide { opacity: 0; pointer-events: none; }
-        .header { text-align: center; margin-bottom: 2rem; }
+
+        .game-selection.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
         .header h1 {
             font-size: 2.6rem;
             background: linear-gradient(135deg, #f5e6b2, #ffcc66, #ffaa33);
@@ -36,7 +51,10 @@
             letter-spacing: 2px;
             margin-bottom: 0.3rem;
         }
-        .header p { color: #8e9bbe; font-size: 0.9rem; }
+        .header p {
+            color: #8e9bbe;
+            font-size: 0.9rem;
+        }
         .badge-row {
             display: flex;
             justify-content: center;
@@ -52,6 +70,7 @@
             font-size: 0.7rem;
             color: #ffdd99;
         }
+
         .toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -75,7 +94,9 @@
             border-color: #ffcc66;
             box-shadow: 0 0 12px rgba(255, 204, 102, 0.2);
         }
-        .search-box span { font-size: 1.1rem; }
+        .search-box span {
+            font-size: 1.1rem;
+        }
         #searchInput {
             background: transparent;
             border: none;
@@ -84,7 +105,9 @@
             width: 260px;
             outline: none;
         }
-        #searchInput::placeholder { color: #6a7a9e; }
+        #searchInput::placeholder {
+            color: #6a7a9e;
+        }
         .stats-badge {
             background: #1e2a3a;
             padding: 0.4rem 1rem;
@@ -94,7 +117,12 @@
             font-weight: 500;
             border: 1px solid rgba(255, 204, 102, 0.3);
         }
-        .stats-badge span { color: white; font-weight: bold; margin: 0 4px; }
+        .stats-badge span {
+            color: white;
+            font-weight: bold;
+            margin: 0 4px;
+        }
+
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -102,6 +130,7 @@
             max-width: 1400px;
             margin: 0 auto;
         }
+
         .game-card {
             display: flex;
             align-items: center;
@@ -126,15 +155,25 @@
             background: linear-gradient(90deg, transparent, rgba(255, 204, 102, 0.12), transparent);
             transition: left 0.4s ease;
         }
-        .game-card:hover::before { left: 100%; }
+        .game-card:hover::before {
+            left: 100%;
+        }
         .game-card:hover {
             transform: translateY(-4px) scale(1.01);
             border-color: #ffcc66;
             background: linear-gradient(115deg, #1e2a44, #141c30);
             box-shadow: 0 14px 28px -8px rgba(0,0,0,0.5), 0 0 0 1px rgba(255, 204, 102, 0.2) inset;
         }
-        .game-icon { font-size: 2rem; min-width: 52px; text-align: center; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-        .game-info { flex: 1; }
+
+        .game-icon {
+            font-size: 2rem;
+            min-width: 52px;
+            text-align: center;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        .game-info {
+            flex: 1;
+        }
         .game-title {
             font-weight: 700;
             font-size: 0.95rem;
@@ -152,32 +191,143 @@
             border-radius: 20px;
             color: #ffdd99;
         }
-        .arrow-hint { opacity: 0.5; font-size: 0.75rem; transition: 0.2s; }
-        .game-card:hover .arrow-hint { opacity: 1; transform: translateX(3px); color: #ffcc66; }
-        .no-results { text-align: center; grid-column: 1 / -1; padding: 3rem; background: rgba(0,0,0,0.2); border-radius: 48px; color: #9eafcf; }
-        .footer { text-align: center; margin-top: 3rem; font-size: 0.7rem; color: #5c6e8c; border-top: 1px solid rgba(255, 204, 102, 0.15); padding-top: 1.8rem; }
-        .fullscreen-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 10000; flex-direction: column; }
-        .fullscreen-modal.active { display: flex; }
-        .fullscreen-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 204, 102, 0.3); z-index: 10; }
-        .fullscreen-title { color: #ffdd99; font-weight: 600; font-size: 0.9rem; }
-        .fullscreen-close { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; padding: 0 10px; transition: 0.2s; }
-        .fullscreen-close:hover { color: #ffcc66; transform: scale(1.1); }
-        .fullscreen-content { flex: 1; display: flex; justify-content: center; align-items: center; background: #000; }
-        #fullscreenEmulator { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-        #fullscreenEmulator canvas { max-width: 100%; max-height: calc(100vh - 60px); object-fit: contain; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .arrow-hint {
+            opacity: 0.5;
+            font-size: 0.75rem;
+            transition: 0.2s;
+        }
+        .game-card:hover .arrow-hint {
+            opacity: 1;
+            transform: translateX(3px);
+            color: #ffcc66;
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 3rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 48px;
+            color: #9eafcf;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: #5c6e8c;
+            border-top: 1px solid rgba(255, 204, 102, 0.15);
+            padding-top: 1.8rem;
+        }
+
+        /* Fullscreen Emulator Modal */
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 10000;
+            flex-direction: column;
+        }
+        .fullscreen-modal.active {
+            display: flex;
+        }
+        .fullscreen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 204, 102, 0.3);
+            z-index: 10;
+        }
+        .fullscreen-title {
+            color: #ffdd99;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .fullscreen-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0 10px;
+            transition: 0.2s;
+        }
+        .fullscreen-close:hover {
+            color: #ffcc66;
+            transform: scale(1.1);
+        }
+        .fullscreen-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+        #fullscreenEmulator {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #fullscreenEmulator canvas {
+            max-width: 100%;
+            max-height: calc(100vh - 60px);
+            object-fit: contain;
+        }
+
+        .letter-jump {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-bottom: 1.5rem;
+        }
+        .letter-btn {
+            background: rgba(20, 28, 48, 0.7);
+            border: 1px solid rgba(255, 204, 102, 0.3);
+            border-radius: 8px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #cbd5ee;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: monospace;
+        }
+        .letter-btn:hover {
+            background: rgba(255, 204, 102, 0.2);
+            color: #ffeaaf;
+        }
+        .letter-btn.active {
+            background: #ffcc66;
+            color: #1a1f2e;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 640px) {
-            .game-selection { padding: 1rem; }
+            body { padding: 1rem; }
             .games-grid { grid-template-columns: 1fr; }
             .game-card { padding: 0.7rem 1rem; }
             .game-icon { font-size: 1.6rem; min-width: 45px; }
             .search-box #searchInput { width: 160px; }
+            .letter-btn { padding: 0.2rem 0.5rem; font-size: 0.65rem; }
         }
     </style>
 </head>
 <body>
 
-<div id="gameSelection" class="game-selection">
+<div class="game-selection" id="gameSelection">
     <div class="header">
         <h1>🎮 NDS HUB</h1>
         <p>Nintendo DS — dual-screen gaming collection</p>
@@ -188,6 +338,7 @@
             <div class="badge">🖱️ Touch Support</div>
         </div>
     </div>
+
     <div class="toolbar">
         <div class="search-box">
             <span>🔍</span>
@@ -197,12 +348,15 @@
             📚 <span id="totalCount">0</span> DS games
         </div>
     </div>
+
     <div id="gamesContainer" class="games-grid"></div>
+
     <div class="footer">
         <span>🎮 NDS Hub • Click any game to play in fullscreen</span>
     </div>
 </div>
 
+<!-- Fullscreen Emulator Modal -->
 <div id="fullscreenModal" class="fullscreen-modal">
     <div class="fullscreen-header">
         <span class="fullscreen-title" id="fullscreenGameTitle">Nintendo DS Emulator</span>
@@ -214,6 +368,7 @@
 </div>
 
 <script>
+    // ============ GOOGLE DRIVE CONFIG ============
     const FOLDER_ID = '12bIfSUq3ZWWZ-1S0XAY7-e5tu5Sy6VDD';
     const API_KEY = 'AIzaSyAL1l3O7Jr8M635xZsxT3jI9yE-yp13KTc';
     
@@ -221,137 +376,175 @@
     let currentRomName = '';
     let currentRomBlob = null;
     
-    // List of CORS proxies to try (will try each until one works)
-    const PROXIES = [
-        'https://cors-anywhere.herokuapp.com/',
-        'https://proxy.cors.sh/',
-        'https://cors-proxy.htmldriven.com/?url='
+    const CORS_PROXIES = [
+        'https://api.allorigins.win/raw?url=',
+        'https://corsproxy.io/?',
+        'https://api.codetabs.com/v1/proxy?quest='
     ];
     
-    async function fetchWithProxy(url) {
-        // Try each proxy
-        for (const proxy of PROXIES) {
-            try {
-                const proxyUrl = proxy + encodeURIComponent(url);
-                const response = await fetch(proxyUrl);
-                if (response.ok) {
-                    return await response.json();
-                }
-            } catch (e) {
-                console.log(`Proxy ${proxy} failed:`, e.message);
-            }
-        }
-        
-        // If all proxies fail, try direct (might work on some networks)
+    // IndexedDB cache
+    let db = null;
+    (function openDB() {
         try {
-            const response = await fetch(url);
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (e) {
-            console.log('Direct fetch failed:', e.message);
+            const req = indexedDB.open('nds-rom-cache', 1);
+            req.onupgradeneeded = e => e.target.result.createObjectStore('roms');
+            req.onsuccess = e => { db = e.target.result; };
+        } catch {}
+    })();
+    
+    function getCachedRom(fileId) {
+        if (!db) return Promise.resolve(null);
+        return new Promise(resolve => {
+            try {
+                const tx = db.transaction('roms', 'readonly');
+                const req = tx.objectStore('roms').get(fileId);
+                req.onsuccess = () => resolve(req.result || null);
+                req.onerror = () => resolve(null);
+            } catch { resolve(null); }
+        });
+    }
+    
+    function cacheRom(fileId, blob) {
+        if (!db) return;
+        try {
+            const tx = db.transaction('roms', 'readwrite');
+            tx.objectStore('roms').put(blob, fileId);
+        } catch {}
+    }
+    
+    const LIBRARY_CACHE_KEY = 'nds-library-cache';
+    const LIBRARY_CACHE_TTL = 3600000;
+    
+    function getCachedLibrary() {
+        try {
+            const raw = localStorage.getItem(LIBRARY_CACHE_KEY);
+            if (!raw) return null;
+            const { files, timestamp } = JSON.parse(raw);
+            if (Date.now() - timestamp > LIBRARY_CACHE_TTL) return null;
+            return files;
+        } catch { return null; }
+    }
+    
+    function setCachedLibrary(files) {
+        try { localStorage.setItem(LIBRARY_CACHE_KEY, JSON.stringify({ files, timestamp: Date.now() })); } catch {}
+    }
+    
+    function parseEmbedHTML(html) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const files = [];
+        doc.querySelectorAll('.flip-entry').forEach(entry => {
+            const titleEl = entry.querySelector('.flip-entry-title');
+            const linkEl = entry.querySelector('a');
+            if (!titleEl || !linkEl) return;
+            const name = titleEl.textContent.trim();
+            const href = linkEl.getAttribute('href') || '';
+            const idMatch = href.match(/\/d\/([^/]+)/);
+            if (!idMatch) return;
+            const ln = name.toLowerCase();
+            if (!ln.endsWith('.nds') && !ln.endsWith('.zip')) return;
+            files.push({
+                id: idMatch[1],
+                name: name.replace(/\.(nds|zip)$/i, ''),
+                ext: ln.endsWith('.zip') ? 'zip' : 'nds',
+                size: ln.endsWith('.zip') ? 'ZIP' : 'NDS'
+            });
+        });
+        files.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+        return files;
+    }
+    
+    async function fetchWithProxyRace(url, validate, timeout = 30000) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeout);
+        const attempts = CORS_PROXIES.map(async proxy => {
+            const resp = await fetch(proxy + encodeURIComponent(url), { signal: controller.signal });
+            if (!resp.ok) throw new Error('not ok');
+            const result = await validate(resp);
+            if (!result) throw new Error('validation failed');
+            return result;
+        });
+        try {
+            const result = await Promise.any(attempts);
+            clearTimeout(timer);
+            controller.abort();
+            return result;
+        } catch {
+            clearTimeout(timer);
+            return null;
         }
-        
-        throw new Error('All proxies failed to fetch data');
     }
     
     async function fetchDriveFolder() {
-        // Try cache first
-        const cached = localStorage.getItem('nds-library');
-        if (cached) {
-            try {
-                const { files, timestamp } = JSON.parse(cached);
-                if (Date.now() - timestamp < 3600000) {
-                    return files;
-                }
-            } catch(e) {}
-        }
+        const cached = getCachedLibrary();
+        if (cached && cached.length > 0) return cached;
         
-        const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name)&pageSize=1000`;
+        const embedUrl = `https://drive.google.com/embeddedfolderview?id=${FOLDER_ID}`;
+        const html = await fetchWithProxyRace(embedUrl, async (resp) => {
+            const text = await resp.text();
+            return text.includes('flip-entry') ? text : null;
+        }, 15000);
         
-        try {
-            const data = await fetchWithProxy(url);
-            
-            if (!data.files || data.files.length === 0) {
-                throw new Error('No files found');
-            }
-            
-            const files = data.files
-                .filter(f => {
-                    const name = f.name.toLowerCase();
-                    return name.endsWith('.nds') || name.endsWith('.zip');
-                })
-                .map(f => ({
-                    id: f.id,
-                    name: f.name.replace(/\.(nds|zip)$/i, ''),
-                    ext: f.name.toLowerCase().endsWith('.zip') ? 'zip' : 'nds'
-                }));
-            
-            files.sort((a, b) => a.name.localeCompare(b.name));
-            
-            localStorage.setItem('nds-library', JSON.stringify({
-                files: files,
-                timestamp: Date.now()
-            }));
-            
-            return files;
-        } catch (error) {
-            console.error('Drive API error:', error);
-            throw new Error(`Failed to load ROMs: ${error.message}`);
-        }
+        if (!html) throw new Error('Could not load folder. Check that the folder is public.');
+        const files = parseEmbedHTML(html);
+        setCachedLibrary(files);
+        return files;
     }
     
-    async function downloadRom(fileId) {
-        // Try direct download
-        const directUrl = `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`;
+    async function downloadRomBlob(fileId) {
+        const cached = await getCachedRom(fileId);
+        if (cached && cached.size > 1000) return cached;
         
         try {
-            const response = await fetch(directUrl);
-            if (response.ok) {
-                const blob = await response.blob();
-                if (blob.size > 1000 && !blob.type.includes('text/html')) {
-                    return blob;
-                }
+            const directUrl = `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`;
+            const resp = await fetch(directUrl);
+            if (resp.ok) {
+                const blob = await resp.blob();
+                if (blob.size > 1000) return blob;
             }
-        } catch(e) {}
+        } catch (e) {}
         
-        // Fallback to Google Drive download with proxy
         const proxyUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-        
-        try {
-            const response = await fetchWithProxy(proxyUrl);
-            if (response && response.size > 1000) {
-                return response;
+        let blob = await fetchWithProxyRace(proxyUrl, async (resp) => {
+            const data = await resp.blob();
+            if (data.size > 50000 && !data.type.includes('text/html')) return data;
+            const text = await data.text();
+            if (text.includes('confirm=')) {
+                const confirmUrl = `https://drive.google.com/uc?export=download&confirm=t&id=${fileId}`;
+                return await fetchWithProxyRace(confirmUrl, async (r) => {
+                    const b = await r.blob();
+                    return b.size > 1000 ? b : null;
+                }, 45000);
             }
-        } catch(e) {}
+            return null;
+        }, 60000);
         
-        throw new Error('Could not download ROM file');
+        if (!blob || blob.size < 1000) throw new Error('Download failed');
+        cacheRom(fileId, blob);
+        return blob;
     }
     
     async function loadRom(fileId, name) {
-        const selectionScreen = document.getElementById('gameSelection');
-        const modal = document.getElementById('fullscreenModal');
-        const titleEl = document.getElementById('fullscreenGameTitle');
-        
-        titleEl.textContent = `${name} (Nintendo DS)`;
-        modal.classList.add('active');
-        selectionScreen.classList.add('hide');
+        document.getElementById('fullscreenGameTitle').textContent = `${name} (Nintendo DS)`;
+        document.getElementById('fullscreenModal').classList.add('active');
+        document.getElementById('gameSelection').classList.add('hide');
         
         try {
-            const blob = await downloadRom(fileId);
+            const blob = await downloadRomBlob(fileId);
             currentRomName = name;
             currentRomBlob = blob;
-            launchEmulator(URL.createObjectURL(blob), name);
+            launchFullscreenEmulator(URL.createObjectURL(blob), name);
         } catch (error) {
+            console.error('Load error:', error);
             alert('Failed to load ROM: ' + error.message);
-            modal.classList.remove('active');
-            selectionScreen.classList.remove('hide');
+            document.getElementById('fullscreenModal').classList.remove('active');
+            document.getElementById('gameSelection').classList.remove('hide');
         }
     }
     
-    function launchEmulator(romUrl, gameName) {
-        const emulatorDiv = document.getElementById('fullscreenEmulator');
-        emulatorDiv.innerHTML = '';
+    function launchFullscreenEmulator(romUrl, gameName) {
+        const fullscreenEmulatorDiv = document.getElementById('fullscreenEmulator');
+        fullscreenEmulatorDiv.innerHTML = '';
         
         window.EJS_player = '#fullscreenEmulator';
         window.EJS_core = 'nds';
@@ -370,15 +563,12 @@
         document.body.appendChild(script);
     }
     
-    function closeEmulator() {
-        const modal = document.getElementById('fullscreenModal');
-        const emulatorDiv = document.getElementById('fullscreenEmulator');
-        const selectionScreen = document.getElementById('gameSelection');
-        
-        modal.classList.remove('active');
-        emulatorDiv.innerHTML = '';
-        selectionScreen.classList.remove('hide');
-        
+    function closeFullscreenEmulator() {
+        const fullscreenModal = document.getElementById('fullscreenModal');
+        const fullscreenEmulatorDiv = document.getElementById('fullscreenEmulator');
+        fullscreenModal.classList.remove('active');
+        fullscreenEmulatorDiv.innerHTML = '';
+        document.getElementById('gameSelection').classList.remove('hide');
         if (window.EJS_emulator) {
             try { window.EJS_emulator.destroy?.(); } catch(e) {}
             window.EJS_emulator = null;
@@ -392,22 +582,58 @@
         if (lower.includes('zelda')) return '🗡️';
         if (lower.includes('kirby')) return '⭐';
         if (lower.includes('animal crossing')) return '🏡';
+        if (lower.includes('nintendogs')) return '🐕';
+        if (lower.includes('brain age')) return '🧠';
         if (lower.includes('castlevania')) return '🦇';
-        if (lower.includes('metroid')) return '🕷️';
         if (lower.includes('ace attorney')) return '⚖️';
+        if (lower.includes('professor layton')) return '🎩';
+        if (lower.includes('metroid')) return '🕷️';
         if (lower.includes('dragon ball')) return '🐉';
         if (lower.includes('one piece')) return '🏴‍☠️';
         if (lower.includes('mega man')) return '🤖';
+        if (lower.includes('final fantasy')) return '⚔️';
+        if (lower.includes('kingdom hearts')) return '🔑';
         return '🎮';
     }
     
     let searchTerm = '';
+    let currentLetter = 'all';
+    let filteredRoms = [];
+    
+    function buildLetterJump() {
+        const letters = [];
+        for (let i = 65; i <= 90; i++) letters.push(String.fromCharCode(i));
+        letters.unshift('all');
+        
+        const container = document.getElementById('letterJump');
+        if (!container) return;
+        
+        container.innerHTML = letters.map(letter => `
+            <button class="letter-btn ${letter === currentLetter ? 'active' : ''}" data-letter="${letter}">${letter === 'all' ? 'ALL' : letter}</button>
+        `).join('');
+        
+        document.querySelectorAll('.letter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentLetter = btn.getAttribute('data-letter');
+                document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderGames();
+            });
+        });
+    }
     
     function renderGames() {
         let filtered = romLibrary;
+        
         if (searchTerm) {
             filtered = romLibrary.filter(rom => 
                 rom.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+        
+        if (currentLetter !== 'all') {
+            filtered = filtered.filter(rom => 
+                rom.name.charAt(0).toUpperCase() === currentLetter
             );
         }
         
@@ -415,22 +641,42 @@
         const container = document.getElementById('gamesContainer');
         
         if (filtered.length === 0) {
-            container.innerHTML = `<div class="no-results">✨ no DS games found — try a different search ✨</div>`;
+            container.innerHTML = `<div class="no-results">✨ no DS games found — try a different search or letter ✨</div>`;
             return;
         }
         
-        container.innerHTML = filtered.map(rom => `
-            <div class="game-card" data-id="${rom.id}" data-name="${escapeHtml(rom.name)}">
-                <div class="game-icon">${getGameIcon(rom.name)}</div>
-                <div class="game-info">
-                    <div class="game-title">
-                        ${escapeHtml(rom.name)}
-                        <span class="game-badge">NDS</span>
+        // Group by first letter
+        const grouped = {};
+        filtered.forEach(rom => {
+            const firstLetter = rom.name.charAt(0).toUpperCase();
+            if (!grouped[firstLetter]) grouped[firstLetter] = [];
+            grouped[firstLetter].push(rom);
+        });
+        
+        const letters = Object.keys(grouped).sort();
+        
+        let html = '';
+        letters.forEach(letter => {
+            html += `<div style="margin-bottom: 0.5rem; padding-left: 0.5rem;"><span style="color: #ffcc66; font-size: 1.2rem; font-weight: bold; border-left: 3px solid #ffcc66; padding-left: 10px;">${letter}</span></div>`;
+            html += `<div style="display: contents;">`;
+            grouped[letter].forEach(rom => {
+                html += `
+                    <div class="game-card" data-id="${rom.id}" data-name="${escapeHtml(rom.name)}">
+                        <div class="game-icon">${getGameIcon(rom.name)}</div>
+                        <div class="game-info">
+                            <div class="game-title">
+                                ${escapeHtml(rom.name)}
+                                <span class="game-badge">NDS</span>
+                            </div>
+                            <div class="arrow-hint">▶ play fullscreen</div>
+                        </div>
                     </div>
-                    <div class="arrow-hint">▶ play fullscreen</div>
-                </div>
-            </div>
-        `).join('');
+                `;
+            });
+            html += `</div>`;
+        });
+        
+        container.innerHTML = html;
         
         document.querySelectorAll('.game-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -452,24 +698,15 @@
     
     async function init() {
         const container = document.getElementById('gamesContainer');
-        container.innerHTML = '<div class="no-results"><div style="text-align:center"><div style="width:40px;height:40px;border:3px solid rgba(255,204,102,0.2);border-top-color:#ffcc66;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px"></div><p>Loading DS library...</p><p style="margin-top:10px;font-size:12px">If this takes more than 30 seconds, check the console (F12) for errors.</p></div></div>';
+        container.innerHTML = '<div class="no-results"><div style="text-align:center"><div style="width:40px;height:40px;border:3px solid rgba(255,204,102,0.2);border-top-color:#ffcc66;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px"></div><p>Loading DS library...</p></div></div>';
         
         try {
             romLibrary = await fetchDriveFolder();
+            buildLetterJump();
             renderGames();
         } catch (error) {
             console.error(error);
-            container.innerHTML = `
-                <div class="no-results">
-                    <p>⚠️ Error loading ROMs: ${error.message}</p>
-                    <p style="margin-top:10px;font-size:12px">
-                        <br>This is likely a CORS issue. Try:
-                        <br>1. Install a CORS Unblock extension in your browser
-                        <br>2. Or open this file using a local server (like "Live Server" in VS Code)
-                        <br>3. Or deploy to GitHub Pages instead of opening from file://
-                    </p>
-                </div>
-            `;
+            container.innerHTML = `<div class="no-results"><p>Error loading ROMs: ${error.message}</p></div>`;
         }
     }
     
@@ -482,13 +719,14 @@
         }, 250);
     });
     
-    document.getElementById('fullscreenCloseBtn').addEventListener('click', closeEmulator);
+    document.getElementById('fullscreenCloseBtn').addEventListener('click', closeFullscreenEmulator);
     document.getElementById('fullscreenModal').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('fullscreenModal')) closeEmulator();
+        if (e.target === document.getElementById('fullscreenModal')) closeFullscreenEmulator();
     });
+    
     document.addEventListener('keydown', (e) => {
         if (document.getElementById('fullscreenModal').classList.contains('active') && e.key === 'Escape') {
-            closeEmulator();
+            closeFullscreenEmulator();
         }
     });
     
