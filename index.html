@@ -34,7 +34,6 @@
             --glow-color: rgba(124, 92, 255, 0.15);
         }
         
-        /* Fanter theme variants - simplified */
         body.theme-pokemon { --accent-fg: #ffd93d; --accent-emphasis: #f0c000; --btn-gradient: linear-gradient(145deg, #f0c000, #d4a800); }
         body.theme-mario { --accent-fg: #ff6b6b; --accent-emphasis: #e74c3c; --btn-gradient: linear-gradient(145deg, #e74c3c, #c0392b); }
         body.theme-zelda { --accent-fg: #90ee90; --accent-emphasis: #5cb85c; --btn-gradient: linear-gradient(145deg, #5cb85c, #449d44); }
@@ -58,7 +57,6 @@
         
         .container { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 500px; }
         
-        /* Header - fanter style */
         .header { 
             display: flex; 
             align-items: center; 
@@ -94,32 +92,8 @@
             cursor: pointer; 
             transition: all 0.2s;
         }
-        .header-badge:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 12px rgba(124, 92, 255, 0.4);
-        }
+        .header-badge:hover { transform: scale(1.02); box-shadow: 0 0 12px rgba(124, 92, 255, 0.4); }
         
-        /* Now playing - fanter style */
-        .now-playing { 
-            display: none; 
-            align-items: center; 
-            gap: 8px; 
-            padding: 6px 12px; 
-            background: var(--canvas-subtle);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-default); 
-            border-radius: 12px; 
-            max-width: 380px; 
-            width: 100%; 
-        }
-        .now-playing.show { display: flex; }
-        .now-playing-icon { width: 24px; height: 24px; background: var(--success-emphasis); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-        .now-playing-icon svg { width: 12px; height: 12px; fill: var(--fg-default); }
-        .now-playing-text { flex: 1; min-width: 0; }
-        .now-playing-label { color: var(--fg-muted); font-size: 9px; font-family: 'JetBrains Mono', monospace; }
-        .now-playing-name { color: var(--fg-default); font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* Console body - glassmorphism */
         .console-body { 
             width: min(380px, 95vw); 
             background: var(--canvas-subtle);
@@ -159,14 +133,9 @@
         }
         #game-wrapper { width: 100%; background: #000; border-radius: 8px; overflow: hidden; position: relative; min-height: 200px; }
         desmond-player { display: block; width: 100%; }
-        .game-placeholder { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--fg-subtle); z-index: 2; background: rgba(0,0,0,0.7); }
-        
-        .screen-divider { position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--accent-fg); z-index: 10; pointer-events: none; opacity: 0.3; }
         .game-placeholder { text-align: center; color: var(--fg-subtle); padding: 20px; }
-        .game-placeholder svg { width: 48px; height: 48px; fill: var(--fg-subtle); margin-bottom: 10px; opacity: 0.5; }
-        .game-placeholder p { font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+        .screen-divider { position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--accent-fg); z-index: 10; pointer-events: none; opacity: 0.3; }
         
-        /* Controller - glassmorphism */
         .controller { 
             width: min(380px, 95vw); 
             background: var(--canvas-subtle);
@@ -217,10 +186,8 @@
         .dpad-right { right: 0; border-radius: 0 6px 6px 0; }
         .dpad-center { position: absolute; width: 34px; height: 34px; top: 33px; left: 33px; background: var(--canvas-inset); border: 2px solid var(--border-muted); }
         
-        .action-btns { display: flex; gap: 15px; align-items: center; }
         .action-btns-grid { display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .action-row { display: flex; gap: 30px; }
-        
         .action-btn { 
             width: 42px; 
             height: 42px; 
@@ -257,10 +224,8 @@
         .status-row { display: flex; align-items: center; gap: 6px; }
         .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--fg-subtle); }
         .status-dot.success { background: var(--success-fg); animation: pulse 2s ease-in-out infinite; }
-        .status-dot.warning { background: var(--attention-fg); animation: pulse 1s ease-in-out infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
         
-        /* Modals - fanter style */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; padding: 10px; }
         .modal.show { display: flex; }
         .modal-content { 
@@ -276,8 +241,6 @@
         .modal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border-default); }
         .modal-header svg { width: 24px; height: 24px; fill: var(--accent-fg); }
         .modal-title { color: var(--fg-default); font-size: 18px; font-weight: 700; }
-        .modal-section { color: var(--accent-fg); font-size: 11px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; margin: 14px 0 8px; display: flex; align-items: center; gap: 8px; }
-        .modal-section::after { content: ''; flex: 1; height: 1px; background: var(--border-muted); }
         .modal-option { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: rgba(0,0,0,0.2); border: 1px solid var(--border-muted); border-radius: 12px; margin-bottom: 8px; }
         .modal-option label { color: var(--fg-default); font-size: 13px; font-weight: 500; }
         .modal-option button, .modal-option select { 
@@ -290,7 +253,6 @@
             color: white; 
             cursor: pointer; 
         }
-        .modal-option select { background: rgba(0,0,0,0.3); border: 1px solid var(--border-default); max-width: 140px; color: white; }
         .modal-close { 
             display: block; 
             width: 100%; 
@@ -305,7 +267,6 @@
             cursor: pointer; 
         }
         
-        /* Search and library - fanter style */
         .search-box { position: relative; margin-bottom: 10px; }
         .search-input { 
             width: 100%; 
@@ -317,7 +278,6 @@
             font-size: 13px; 
         }
         .search-input:focus { outline: none; border-color: var(--accent-fg); box-shadow: 0 0 12px rgba(124, 92, 255, 0.2); }
-        .search-input::placeholder { color: var(--fg-subtle); }
         .search-box svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; fill: var(--fg-subtle); }
         .rom-count { color: var(--accent-fg); font-size: 11px; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
         .rom-library { max-height: 300px; overflow-y: auto; margin-bottom: 10px; }
@@ -336,9 +296,7 @@
         .rom-item:hover { border-color: var(--accent-fg); background: rgba(124, 92, 255, 0.1); }
         .rom-icon { width: 32px; height: 32px; background: var(--btn-gradient); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
         .rom-icon svg { width: 16px; height: 16px; fill: white; }
-        .rom-info { flex: 1; min-width: 0; }
-        .rom-name { color: var(--fg-default); font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .rom-meta { color: var(--fg-muted); font-size: 10px; font-family: 'JetBrains Mono', monospace; }
+        .rom-name { color: var(--fg-default); font-size: 13px; font-weight: 500; }
         .rom-play { 
             background: var(--btn-gradient); 
             border: none; 
@@ -363,13 +321,9 @@
             font-size: 12px; 
             cursor: pointer; 
         }
-        .file-label svg { width: 16px; height: 16px; fill: var(--fg-muted); }
         .hidden { display: none; }
-        
-        .library-loading { text-align: center; padding: 30px; color: var(--fg-muted); }
         .spinner { width: 30px; height: 30px; border: 3px solid var(--border-muted); border-top-color: var(--accent-fg); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 10px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .library-empty { text-align: center; padding: 20px; color: var(--fg-muted); font-size: 13px; }
     </style>
 </head>
 <body>
@@ -382,15 +336,7 @@
             </div>
             <span class="header-badge" id="library-btn">LIBRARY</span>
         </div>
-        
-        <div class="now-playing" id="now-playing">
-            <div class="now-playing-icon"><svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"/></svg></div>
-            <div class="now-playing-text">
-                <div class="now-playing-label">NOW PLAYING</div>
-                <div class="now-playing-name" id="now-playing-name">Game Name</div>
-            </div>
-        </div>
-        
+
         <div class="console-body">
             <div class="console-label">⚡ NINTENDO DS ⚡</div>
             <div class="screen-area">
@@ -401,16 +347,14 @@
                     <div id="game-wrapper">
                         <desmond-player id="player"></desmond-player>
                         <div class="game-placeholder" id="game-placeholder">
-                            <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"/></svg>
+                            <svg viewBox="0 0 16 16" width="48" height="48"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"/></svg>
                             <p>Select a ROM from Library</p>
-                            <p style="margin-top:8px;color:var(--accent-fg);font-size:10px;">Dual screen · tap bottom screen for touch</p>
                         </div>
                     </div>
                     <div class="screen-divider" id="screen-divider"></div>
                 </div>
             </div>
         </div>
-        
         
         <div class="controller">
             <div class="shoulder-btns">
@@ -440,7 +384,6 @@
             </div>
         </div>
         
-        
         <div class="status" id="status">
             <div class="status-row">
                 <span class="status-dot" id="status-dot"></span>
@@ -459,16 +402,13 @@
                 <svg viewBox="0 0 16 16"><path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"/></svg>
                 <input type="text" class="search-input" id="search-input" placeholder="Search ROMs...">
             </div>
-            <div class="rom-count" id="rom-count">Loading...</div>
-            <div class="rom-library" id="rom-library">
-                <div class="library-loading"><div class="spinner"></div><p>Loading ROM library...</p></div>
-            </div>
+            <div class="rom-count" id="rom-count">0 ROMs</div>
+            <div class="rom-library" id="rom-library"></div>
             <label class="file-label">
                 <svg viewBox="0 0 16 16"><path d="M3.5 1.75v11.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.748 1.748 0 0 1 2 13.25V1.75C2 .784 2.784 0 3.75 0h5.586c.464 0 .909.185 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 12.25 15h-7a.75.75 0 0 1 0-1.5h7a.25.25 0 0 0 .25-.25V4.664a.25.25 0 0 0-.073-.177L9.513 1.573a.25.25 0 0 0-.177-.073H3.75a.25.25 0 0 0-.25.25Z"/></svg>
                 Or upload from device
                 <input type="file" class="hidden" id="local-file" accept=".nds,.NDS,.zip">
             </label>
-            <p style="color: var(--success-fg); font-size: 11px; margin-top: 8px;">✓ Touch screen supported — tap/drag on the bottom screen to use stylus input.</p>
             <button class="modal-close" id="library-close">Close</button>
         </div>
     </div>
@@ -479,85 +419,37 @@
                 <svg viewBox="0 0 16 16"><path d="M8 0a8.2 8.2 0 0 1 .701.031C6.444.095 5.393.895 4.939 2H2.375A2.375 2.375 0 0 0 0 4.375v2.25A2.375 2.375 0 0 0 2.375 9h.666c.09.342.22.668.386.974L1.22 12.18a1.5 1.5 0 0 0 0 2.121l.5.5a1.5 1.5 0 0 0 2.121 0l2.206-2.207c.166-.306.296-.632.386-.974h.666A2.375 2.375 0 0 0 16 6.625v-2.25A2.375 2.375 0 0 0 13.625 2h-2.564c-.454-1.105-1.505-1.905-2.76-1.969A8.2 8.2 0 0 1 8 0Z"/></svg>
                 <span class="modal-title">Settings</span>
             </div>
-            <div class="modal-section">Theme</div>
             <div class="modal-option">
-                <label>Color Theme</label>
+                <label>Theme</label>
                 <select id="theme-select">
                     <option value="">Classic NDS</option>
                     <option value="theme-pokemon">Pokemon</option>
-                    <option value="theme-mario">New Super Mario</option>
+                    <option value="theme-mario">Mario</option>
                     <option value="theme-zelda">Zelda</option>
                     <option value="theme-kirby">Kirby</option>
                 </select>
             </div>
-            <div class="modal-section">Game</div>
-            <div class="modal-option"><label>Speed</label><select id="speed-select"><option value="1">1x</option><option value="2">2x</option><option value="3">3x</option><option value="4">4x</option></select></div>
-            <div class="modal-option"><label>Sound</label><button id="mute-btn">🔊 ON</button></div>
-            <div class="modal-option"><label>Screenshot</label><button id="screenshot-btn">📷 SNAP</button></div>
-            <div class="modal-section">Save Data</div>
-            <div class="modal-option"><label>Save State</label><button id="save-btn">💾 SAVE</button></div>
-            <div class="modal-option"><label>Load State</label><button id="load-btn">📂 LOAD</button></div>
-            <div class="modal-option"><label>Restart</label><button id="restart-btn">🔄 RESTART</button></div>
             <div class="modal-option"><label>Download ROM</label><button id="download-rom-btn">💾 DOWNLOAD</button></div>
             <button class="modal-close" id="settings-close">Close</button>
         </div>
     </div>
 
     <script>
-        // ============ CONFIG ============
-        const FOLDER_ID = '12bIfSUq3ZWWZ-1S0XAY7-e5tu5Sy6VDD';
-        const API_KEY = 'AIzaSyAL1l3O7Jr8M635xZsxT3jI9yE-yp13KTc';
+        // ============ STATIC GAME LIST - ADD YOUR GOOGLE DRIVE FILE IDs HERE ============
+        // To get a File ID: Right-click the file in Google Drive → "Get link" → 
+        // Copy the ID from: https://drive.google.com/file/d/YOUR_FILE_ID_HERE/view
         
-        let romLibrary = [];
-        let filteredRoms = [];
-        let isMuted = false;
-        let currentRomName = '';
-        let currentRomBlob = null;
-        let currentRomId = null;
-        
-        const CORS_PROXIES = [
-            'https://api.allorigins.win/raw?url=',
-            'https://corsproxy.io/?',
-            'https://api.codetabs.com/v1/proxy?quest='
+        const romLibrary = [
+            // Add your games like this:
+            // { id: 'YOUR_GOOGLE_DRIVE_FILE_ID', name: 'Game Name' },
+            { id: 'https://drive.google.com/file/d/1mgQk0Q08LzBeytQY2d8tfZGlLg96p2Ho/view', name: 'Yoshi Touch & Go (USA, Australia).nds
+' }
         ];
         
-        // ============ INDEXEDDB ROM CACHE ============
-        let db = null;
-        (function openDB() {
-            try {
-                const req = indexedDB.open('nds-rom-cache', 1);
-                req.onupgradeneeded = e => e.target.result.createObjectStore('roms');
-                req.onsuccess = e => { db = e.target.result; };
-                req.onerror = () => {};
-            } catch {}
-        })();
+        let currentRomName = '';
+        let currentRomBlob = null;
         
-        function getCachedRom(fileId) {
-            if (!db) return Promise.resolve(null);
-            return new Promise(resolve => {
-                try {
-                    const tx = db.transaction('roms', 'readonly');
-                    const req = tx.objectStore('roms').get(fileId);
-                    req.onsuccess = () => resolve(req.result || null);
-                    req.onerror = () => resolve(null);
-                } catch { resolve(null); }
-            });
-        }
-        
-        function cacheRom(fileId, blob) {
-            if (!db) return;
-            try {
-                const tx = db.transaction('roms', 'readwrite');
-                tx.objectStore('roms').put(blob, fileId);
-            } catch {}
-        }
-        
-        // ============ PRELOAD JSZIP ============
-        const jsZipScript = document.createElement('script');
-        jsZipScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
-        document.head.appendChild(jsZipScript);
-        
-        // ============ THEME ============
+        // Theme handling
         const savedTheme = localStorage.getItem('nds-theme') || '';
         if (savedTheme) document.body.classList.add(savedTheme);
         document.getElementById('theme-select').value = savedTheme;
@@ -567,269 +459,29 @@
             localStorage.setItem('nds-theme', e.target.value);
         });
         
-        // ============ RACE ALL PROXIES (fastest wins) ============
-        async function fetchWithProxyRace(url, validate, timeout = 30000) {
-            const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), timeout);
+        // Download ROM from Google Drive using direct URL
+        async function downloadRom(fileId) {
+            if (!fileId) throw new Error('No File ID provided');
             
-            const attempts = CORS_PROXIES.map(async proxy => {
-                const resp = await fetch(proxy + encodeURIComponent(url), { signal: controller.signal });
-                if (!resp.ok) throw new Error('not ok');
-                const result = await validate(resp);
-                if (!result) throw new Error('validation failed');
-                return result;
-            });
-            
-            try {
-                const result = await Promise.any(attempts);
-                clearTimeout(timer);
-                controller.abort();
-                return result;
-            } catch {
-                clearTimeout(timer);
-                return null;
-            }
+            const directUrl = `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`;
+            const response = await fetch(directUrl);
+            if (!response.ok) throw new Error('Download failed');
+            return await response.blob();
         }
         
-        // ============ LIBRARY: CACHE + FETCH ============
-        const LIBRARY_CACHE_KEY = 'nds-library-cache';
-        const LIBRARY_CACHE_TTL = 3600000; // 1 hour
-        
-        function getCachedLibrary() {
-            try {
-                const raw = localStorage.getItem(LIBRARY_CACHE_KEY);
-                if (!raw) return null;
-                const { files, timestamp } = JSON.parse(raw);
-                if (Date.now() - timestamp > LIBRARY_CACHE_TTL) return null;
-                return files;
-            } catch { return null; }
-        }
-        
-        function setCachedLibrary(files) {
-            try { localStorage.setItem(LIBRARY_CACHE_KEY, JSON.stringify({ files, timestamp: Date.now() })); } catch {}
-        }
-        
-        function parseEmbedHTML(html) {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const files = [];
-            doc.querySelectorAll('.flip-entry').forEach(entry => {
-                const titleEl = entry.querySelector('.flip-entry-title');
-                const linkEl = entry.querySelector('a');
-                if (!titleEl || !linkEl) return;
-                const name = titleEl.textContent.trim();
-                const href = linkEl.getAttribute('href') || '';
-                const idMatch = href.match(/\/d\/([^/]+)/);
-                if (!idMatch) return;
-                const ln = name.toLowerCase();
-                if (!ln.endsWith('.nds') && !ln.endsWith('.zip')) return;
-                files.push({
-                    id: idMatch[1],
-                    name: name.replace(/\.(nds|zip)$/i, ''),
-                    ext: ln.endsWith('.zip') ? 'zip' : 'nds',
-                    size: ln.endsWith('.zip') ? 'ZIP' : 'NDS'
-                });
-            });
-            files.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
-            return files;
-        }
-        
-        async function fetchDriveFolder() {
-            const cached = getCachedLibrary();
-            if (cached && cached.length > 0) return cached;
-            
-            const embedUrl = `https://drive.google.com/embeddedfolderview?id=${FOLDER_ID}`;
-            const html = await fetchWithProxyRace(embedUrl, async (resp) => {
-                const text = await resp.text();
-                return text.includes('flip-entry') ? text : null;
-            }, 15000);
-            
-            if (!html) throw new Error('Could not load folder. Check that the folder is public.');
-            const files = parseEmbedHTML(html);
-            setCachedLibrary(files);
-            return files;
-        }
-        
-        // ============ LIBRARY UI ============
-        async function loadLibrary() {
-            const library = document.getElementById('rom-library');
-            const countEl = document.getElementById('rom-count');
-            
-            // Instant load from cache
-            const cached = getCachedLibrary();
-            if (cached && cached.length > 0 && romLibrary.length === 0) {
-                romLibrary = cached;
-                filteredRoms = romLibrary;
-                countEl.textContent = `${romLibrary.length} ROMs`;
-                renderRomList();
-                // Refresh in background silently
-                fetchDriveFolderFresh().then(fresh => {
-                    if (fresh && fresh.length > 0 && fresh.length !== romLibrary.length) {
-                        romLibrary = fresh;
-                        filteredRoms = romLibrary;
-                        countEl.textContent = `${romLibrary.length} ROMs`;
-                        renderRomList();
-                    }
-                }).catch(() => {});
-                return;
-            }
-            
-            library.innerHTML = '<div class="library-loading"><div class="spinner"></div><p>Loading ROMs...</p></div>';
-            countEl.textContent = 'Loading...';
-            try {
-                romLibrary = await fetchDriveFolder();
-                filteredRoms = romLibrary;
-                if (romLibrary.length === 0) {
-                    library.innerHTML = '<div class="library-empty"><p>No NDS ROMs found</p></div>';
-                    countEl.textContent = '0 ROMs';
-                    return;
-                }
-                countEl.textContent = `${romLibrary.length} ROMs`;
-                renderRomList();
-            } catch (error) {
-                library.innerHTML = `<div class="library-empty"><p>Error: ${error.message}</p></div>`;
-                countEl.textContent = 'Error';
-            }
-        }
-        
-        // Force-refresh bypassing cache
-        async function fetchDriveFolderFresh() {
-            const embedUrl = `https://drive.google.com/embeddedfolderview?id=${FOLDER_ID}`;
-            const html = await fetchWithProxyRace(embedUrl, async (resp) => {
-                const text = await resp.text();
-                return text.includes('flip-entry') ? text : null;
-            }, 15000);
-            if (!html) return null;
-            const files = parseEmbedHTML(html);
-            setCachedLibrary(files);
-            return files;
-        }
-        
-        function renderRomList() {
-            const library = document.getElementById('rom-library');
-            if (filteredRoms.length === 0) {
-                library.innerHTML = '<div class="library-empty"><p>No ROMs match your search</p></div>';
-                return;
-            }
-            library.innerHTML = filteredRoms.map((rom, i) => `
-                <div class="rom-item" data-index="${i}">
-                    <div class="rom-icon"><svg viewBox="0 0 16 16"><path d="M14.5 3H12V1.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V3H1.5A1.5 1.5 0 0 0 0 4.5v9A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 3Z"/></svg></div>
-                    <div class="rom-info">
-                        <div class="rom-name">${rom.name}</div>
-                        <div class="rom-meta">${rom.size}</div>
-                    </div>
-                    <button class="rom-play">▶ Play</button>
-                </div>
-            `).join('');
-            library.querySelectorAll('.rom-item').forEach(el => {
-                el.addEventListener('click', () => {
-                    const rom = filteredRoms[parseInt(el.dataset.index)];
-                    loadRom(rom.id, rom.name);
-                });
-            });
-        }
-        
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            filteredRoms = romLibrary.filter(r => r.name.toLowerCase().includes(query));
-            document.getElementById('rom-count').textContent = `${filteredRoms.length} of ${romLibrary.length} ROMs`;
-            renderRomList();
-        });
-        
-        // ============ ROM DOWNLOAD: DIRECT (no proxy!) + CACHE ============
-        async function downloadRomBlob(fileId, statusText) {
-            // 1. Check IndexedDB cache — instant replay
-            const cached = await getCachedRom(fileId);
-            if (cached && cached.size > 1000) {
-                statusText.textContent = 'Loaded from cache ⚡';
-                return cached;
-            }
-            
-            statusText.textContent = 'Downloading...';
-            
-            // 2. Try direct download from drive.usercontent.google.com (has CORS headers!)
-            try {
-                const directUrl = `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`;
-                const resp = await fetch(directUrl);
-                if (resp.ok) {
-                    const contentLength = parseInt(resp.headers.get('content-length') || '0');
-                    
-                    // Stream with progress if we know the size
-                    if (contentLength > 0 && resp.body) {
-                        const reader = resp.body.getReader();
-                        const chunks = [];
-                        let received = 0;
-                        while (true) {
-                            const { done, value } = await reader.read();
-                            if (done) break;
-                            chunks.push(value);
-                            received += value.length;
-                            const mb = (received / 1048576).toFixed(1);
-                            const total = (contentLength / 1048576).toFixed(0);
-                            const pct = Math.round((received / contentLength) * 100);
-                            statusText.textContent = `Downloading... ${mb}/${total} MB (${pct}%)`;
-                        }
-                        const blob = new Blob(chunks);
-                        if (blob.size > 1000) return blob;
-                    } else {
-                        const blob = await resp.blob();
-                        if (blob.size > 1000 && !blob.type.includes('text/html')) return blob;
-                    }
-                }
-            } catch (e) { console.log('Direct download failed:', e); }
-            
-            // 3. Fallback: race CORS proxies
-            statusText.textContent = 'Downloading (proxy)...';
-            const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-            let blob = await fetchWithProxyRace(directUrl, async (resp) => {
-                const data = await resp.blob();
-                if (data.size > 50000 && !data.type.includes('text/html')) return data;
-                const text = await data.text();
-                if (text.includes('confirm=') || text.includes('download_warning') || text.includes('uuid=')) {
-                    const confirmUrl = `https://drive.google.com/uc?export=download&confirm=t&id=${fileId}`;
-                    return await fetchWithProxyRace(confirmUrl, async (r) => {
-                        const b = await r.blob();
-                        return b.size > 1000 ? b : null;
-                    }, 45000);
-                }
-                return null;
-            }, 60000);
-            
-            if (!blob || blob.size < 1000) throw new Error('Download failed — try uploading the ROM directly');
-            return blob;
-        }
-        
+        // Load and play ROM
         async function loadRom(fileId, name) {
-            const statusText = document.getElementById('status-text');
             const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            
             statusDot.className = 'status-dot warning';
             statusText.textContent = `Loading ${name}...`;
             document.getElementById('library-modal').classList.remove('show');
+            
             try {
-                let blob = await downloadRomBlob(fileId, statusText);
-                
-                // Handle zip extraction
-                const romEntry = romLibrary.find(r => r.id === fileId);
-                if (romEntry?.ext === 'zip' || blob.type === 'application/zip' || blob.type === 'application/x-zip-compressed') {
-                    statusText.textContent = 'Extracting...';
-                    if (!window.JSZip) {
-                        await new Promise(r => { jsZipScript.addEventListener('load', r); setTimeout(r, 5000); });
-                    }
-                    if (window.JSZip) {
-                        const zip = await JSZip.loadAsync(blob);
-                        const ndsFile = Object.keys(zip.files).find(f => f.toLowerCase().endsWith('.nds'));
-                        if (ndsFile) blob = await zip.files[ndsFile].async('blob');
-                    }
-                }
-                
-                // Cache the final ROM for next time
-                cacheRom(fileId, blob);
-                
+                const blob = await downloadRom(fileId);
                 currentRomName = name;
                 currentRomBlob = blob;
-                currentRomId = fileId;
-                document.getElementById('now-playing-name').textContent = name;
-                document.getElementById('now-playing').classList.add('show');
                 initEmulator(URL.createObjectURL(blob), name);
             } catch (error) {
                 console.error('Load error:', error);
@@ -839,10 +491,50 @@
             }
         }
         
-        // ============ EMULATOR INIT (DESMOND) ============
+        // Render game list
+        function renderRomList() {
+            const library = document.getElementById('rom-library');
+            if (romLibrary.length === 0) {
+                library.innerHTML = '<div class="spinner"></div><p>No games added. Edit the romLibrary array in the code.</p>';
+                document.getElementById('rom-count').textContent = '0 ROMs';
+                return;
+            }
+            
+            document.getElementById('rom-count').textContent = `${romLibrary.length} ROMs`;
+            library.innerHTML = romLibrary.map((rom, i) => `
+                <div class="rom-item" data-index="${i}">
+                    <div class="rom-icon"><svg viewBox="0 0 16 16"><path d="M14.5 3H12V1.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V3H1.5A1.5 1.5 0 0 0 0 4.5v9A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 3Z"/></svg></div>
+                    <div class="rom-info">
+                        <div class="rom-name">${escapeHtml(rom.name)}</div>
+                    </div>
+                    <button class="rom-play">▶ Play</button>
+                </div>
+            `).join('');
+            
+            library.querySelectorAll('.rom-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const rom = romLibrary[parseInt(el.dataset.index)];
+                    if (rom.id) {
+                        loadRom(rom.id, rom.name);
+                    } else {
+                        alert('No File ID set for this game. Edit the romLibrary array.');
+                    }
+                });
+            });
+        }
+        
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // Desmond Emulator
         let desmondLoaded = false;
         function initEmulator(romUrl, gameName) {
-            // Hide placeholder
             const ph = document.getElementById('game-placeholder');
             if (ph) ph.style.display = 'none';
             
@@ -853,7 +545,6 @@
                 player.loadURL(romUrl, () => {
                     document.getElementById('status-text').textContent = 'Ready to play!';
                     document.getElementById('status-dot').className = 'status-dot success';
-                    setTimeout(patchDesmondTouch, 500);
                 });
             }
             
@@ -863,7 +554,6 @@
                 script.onload = () => { desmondLoaded = true; doLoad(); };
                 document.head.appendChild(script);
             } else {
-                // Desmond doesn't support reloading - refresh the player element
                 const wrapper = document.getElementById('game-wrapper');
                 const oldPlayer = document.getElementById('player');
                 if (oldPlayer) oldPlayer.remove();
@@ -874,80 +564,8 @@
             }
         }
         
-        // ============ TOUCH PATCH FOR DESMOND ============
-        let touchPatched = false;
-        function patchDesmondTouch() {
-            const player = document.getElementById('player');
-            const shadow = player?.shadowRoot;
-            if (!shadow) return;
-            
-            const bottomCanvas = shadow.getElementById('bottom');
-            if (!bottomCanvas) return;
-            
-            // Add responsive CSS to shadow root
-            const style = document.createElement('style');
-            style.textContent = `
-                #player { display: flex; flex-direction: column; align-items: center; width: 100%; }
-                canvas { width: 100% !important; height: auto !important; display: block; image-rendering: pixelated; }
-            `;
-            shadow.appendChild(style);
-            
-            if (touchPatched) return;
-            touchPatched = true;
-            
-            const wrapper = document.getElementById('game-wrapper');
-            let isTouching = false;
-            
-            function getTouchPos(touch) {
-                const rect = bottomCanvas.getBoundingClientRect();
-                return {
-                    x: (touch.clientX - rect.left) / rect.width * 256,
-                    y: (touch.clientY - rect.top) / rect.height * 192,
-                    inside: touch.clientX >= rect.left && touch.clientX <= rect.right &&
-                            touch.clientY >= rect.top && touch.clientY <= rect.bottom
-                };
-            }
-            
-            wrapper.addEventListener('touchstart', (e) => {
-                for (let i = 0; i < e.touches.length; i++) {
-                    const pos = getTouchPos(e.touches[i]);
-                    if (pos.inside) {
-                        isTouching = true;
-                        window.dispatchEvent(new MouseEvent('mousedown', {
-                            clientX: e.touches[i].clientX, clientY: e.touches[i].clientY, buttons: 1, bubbles: true
-                        }));
-                        e.preventDefault();
-                        return;
-                    }
-                }
-            }, { passive: false });
-            
-            wrapper.addEventListener('touchmove', (e) => {
-                if (!isTouching) return;
-                for (let i = 0; i < e.touches.length; i++) {
-                    window.dispatchEvent(new MouseEvent('mousemove', {
-                        clientX: e.touches[i].clientX, clientY: e.touches[i].clientY, buttons: 1, bubbles: true
-                    }));
-                    e.preventDefault();
-                    return;
-                }
-            }, { passive: false });
-            
-            wrapper.addEventListener('touchend', (e) => {
-                if (isTouching) {
-                    isTouching = false;
-                    window.dispatchEvent(new MouseEvent('mouseup', { clientX: 0, clientY: 0, buttons: 0, bubbles: true }));
-                }
-            }, { passive: false });
-        }
-        
-        // ============ CONTROLS (DESMOND uses keyboard events) ============
-        // Desmond key mapping: right=39, left=37, down=40, up=38, select=16, start=13, b=90(z), a=88(x), y=65(a), x=83(s), l=81(q), r=87(w)
-        let controlsSetup = false;
+        // Controls
         function setupControls() {
-            if (controlsSetup) return;
-            controlsSetup = true;
-            
             const btnKeyMap = {
                 "btn-a": 88, "btn-b": 90, "btn-x": 83, "btn-y": 65,
                 "btn-l": 81, "btn-r": 87, "btn-select": 16, "btn-start": 13,
@@ -973,13 +591,60 @@
         }
         setupControls();
         
-        // ============ MODAL + EVENT WIRING ============
+        // Handle local file upload
+        document.getElementById('local-file').addEventListener('change', async e => {
+            const file = e.target.files[0];
+            if (!file) return;
+            let romBlob = file;
+            let romName = file.name.replace(/\.(nds|zip)$/i, '');
+            
+            if (file.name.toLowerCase().endsWith('.zip')) {
+                // Load JSZip if needed
+                if (!window.JSZip) {
+                    await new Promise((resolve) => {
+                        const script = document.createElement('script');
+                        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+                        script.onload = resolve;
+                        document.head.appendChild(script);
+                    });
+                }
+                if (window.JSZip) {
+                    const zip = await JSZip.loadAsync(file);
+                    const ndsFile = Object.keys(zip.files).find(f => f.toLowerCase().endsWith('.nds'));
+                    if (ndsFile) {
+                        romBlob = await zip.files[ndsFile].async('blob');
+                        romName = ndsFile.replace(/\.nds$/i, '');
+                    }
+                }
+            }
+            
+            currentRomName = romName;
+            currentRomBlob = romBlob;
+            initEmulator(URL.createObjectURL(romBlob), romName);
+            document.getElementById('library-modal').classList.remove('show');
+            e.target.value = '';
+        });
+        
+        // Download ROM button
+        document.getElementById('download-rom-btn').addEventListener('click', () => {
+            if (!currentRomName || !currentRomBlob) {
+                alert('No game loaded. Load a game first.');
+                return;
+            }
+            const link = document.createElement('a');
+            link.download = `${currentRomName}.nds`;
+            link.href = URL.createObjectURL(currentRomBlob);
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+        
+        // Modal handling
         const libraryModal = document.getElementById('library-modal');
         const settingsModal = document.getElementById('settings-modal');
         
         document.getElementById('library-btn').addEventListener('click', () => {
             libraryModal.classList.add('show');
-            if (romLibrary.length === 0) loadLibrary();
+            renderRomList();
         });
         document.getElementById('library-close').addEventListener('click', () => libraryModal.classList.remove('show'));
         libraryModal.addEventListener('click', e => { if (e.target === libraryModal) libraryModal.classList.remove('show'); });
@@ -988,61 +653,34 @@
         document.getElementById('settings-close').addEventListener('click', () => settingsModal.classList.remove('show'));
         settingsModal.addEventListener('click', e => { if (e.target === settingsModal) settingsModal.classList.remove('show'); });
         
-        document.getElementById('local-file').addEventListener('change', async e => {
-            const file = e.target.files[0];
-            if (!file) return;
-            let romBlob = file;
-            let romName = file.name.replace(/\.(nds|zip)$/i, '');
-            if (file.name.toLowerCase().endsWith('.zip')) {
-                try {
-                    if (!window.JSZip) await new Promise(r => { jsZipScript.addEventListener('load', r); setTimeout(r, 5000); });
-                    if (window.JSZip) {
-                        const zip = await JSZip.loadAsync(file);
-                        const ndsFile = Object.keys(zip.files).find(f => f.toLowerCase().endsWith('.nds'));
-                        if (ndsFile) { romBlob = await zip.files[ndsFile].async('blob'); romName = ndsFile.replace(/\.nds$/i, ''); }
-                    }
-                } catch {}
+        // Search functionality
+        let searchTerm = '';
+        let filteredRoms = [...romLibrary];
+        
+        function updateSearch() {
+            if (!searchTerm) {
+                filteredRoms = [...romLibrary];
+            } else {
+                filteredRoms = romLibrary.filter(rom => 
+                    rom.name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
             }
-            currentRomName = romName; currentRomBlob = romBlob; currentRomId = null;
-            document.getElementById('now-playing-name').textContent = romName;
-            document.getElementById('now-playing').classList.add('show');
-            initEmulator(URL.createObjectURL(romBlob), romName);
-            libraryModal.classList.remove('show');
-            e.target.value = '';
+            renderRomList();
+            document.getElementById('rom-count').textContent = `${filteredRoms.length} of ${romLibrary.length} ROMs`;
+        }
+        
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            updateSearch();
         });
         
-        document.getElementById('speed-select').addEventListener('change', e => { /* Desmond doesn't support speed control */ });
-        document.getElementById('mute-btn').addEventListener('click', e => { /* Desmond doesn't expose mute API */ isMuted = !isMuted; e.target.textContent = isMuted ? '🔇 OFF' : '🔊 ON'; });
-        document.getElementById('screenshot-btn').addEventListener('click', () => {
-            const player = document.getElementById('player');
-            const shadow = player?.shadowRoot;
-            if (!shadow) return alert('No game running');
-            const top = shadow.getElementById('top');
-            const bottom = shadow.getElementById('bottom');
-            if (!top || !bottom) return alert('No game running');
-            // Combine both screens into one image
-            const c = document.createElement('canvas'); c.width = 256; c.height = 384;
-            const ctx = c.getContext('2d');
-            ctx.drawImage(top, 0, 0); ctx.drawImage(bottom, 0, 192);
-            const link = document.createElement('a'); link.download = `${currentRomName || 'screenshot'}.png`; link.href = c.toDataURL(); link.click();
-        });
-        document.getElementById('save-btn').addEventListener('click', () => { alert('Save states not available with Desmond core.'); });
-        document.getElementById('load-btn').addEventListener('click', () => { alert('Save states not available with Desmond core.'); });
-        document.getElementById('restart-btn').addEventListener('click', () => { if (confirm('Restart game? This will reload the ROM.')) location.reload(); });
+        // Audio context resume
+        ['touchstart', 'click'].forEach(evt => document.addEventListener(evt, () => {
+            new (window.AudioContext || window.webkitAudioContext)().resume();
+        }, { once: true }));
         
-        document.getElementById('download-rom-btn').addEventListener('click', () => {
-            if (!currentRomName || !currentRomBlob) { alert('No game loaded.'); return; }
-            const link = document.createElement('a');
-            link.download = `${currentRomName}.nds`;
-            link.href = URL.createObjectURL(currentRomBlob);
-            link.click();
-            URL.revokeObjectURL(link.href);
-        });
-        
-        // ============ PRE-FETCH LIBRARY ON PAGE LOAD ============
-        loadLibrary();
-        
-        ['touchstart', 'click'].forEach(evt => document.addEventListener(evt, () => new (window.AudioContext || window.webkitAudioContext)().resume(), { once: true }));
+        // Initial render
+        renderRomList();
     </script>
 </body>
 </html>
