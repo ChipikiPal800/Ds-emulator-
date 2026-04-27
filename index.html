@@ -341,7 +341,6 @@
 
 <script>
     // ============ GOOGLE DRIVE CONFIG ============
-    // UPDATE THESE WITH YOUR VALUES:
     const FOLDER_ID = '12bIfSUq3ZWWZ-1S0XAY7-e5tu5Sy6VDD';
     const API_KEY = 'AIzaSyAL1l3O7Jr8M635xZsxT3jI9yE-yp13KTc';
     
@@ -349,67 +348,35 @@
     let currentRomName = '';
     let currentRomBlob = null;
     
- // ============ FETCH ROMS USING GOOGLE DRIVE API ============
-async function fetchDriveFolder() {
-    // Try to get from cache first
-    const cached = localStorage.getItem('nds-library');
-    if (cached) {
+    // ============ FETCH ROMS USING GOOGLE DRIVE API WITH CORS PROXY ============
+    async function fetchDriveFolder() {
+        // Try to get from cache first
+        const cached = localStorage.getItem('nds-library');
+        if (cached) {
+            try {
+                const { files, timestamp } = JSON.parse(cached);
+                if (Date.now() - timestamp < 3600000) { // 1 hour cache
+                    return files;
+                }
+            } catch(e) {}
+        }
+        
+        // The URL for your specific folder
+        const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name)&pageSize=1000`;
+        
+        // Use a CORS proxy to bypass the browser's security policy
+        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+        
         try {
-            const { files, timestamp } = JSON.parse(cached);
-            if (Date.now() - timestamp < 3600000) { // 1 hour cache
-                return files;
+            const response = await fetch(proxyUrl);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        } catch(e) {}
-    }
-    
-    // The URL for your specific folder
-    const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name)&pageSize=1000`;
-    
-    // Use a CORS proxy to bypass the browser's security policy
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-    
-    try {
-        const response = await fetch(proxyUrl);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        // The response from the proxy is the data we need directly
-        if (!data.files || data.files.length === 0) {
-            throw new Error('No files found. Make sure the folder is public and contains .nds files');
-        }
-        
-        const files = data.files
-            .filter(f => {
-                const name = f.name.toLowerCase();
-                return name.endsWith('.nds') || name.endsWith('.zip');
-            })
-            .map(f => ({
-                id: f.id,
-                name: f.name.replace(/\.(nds|zip)$/i, ''),
-                ext: f.name.toLowerCase().endsWith('.zip') ? 'zip' : 'nds'
-            }));
-        
-        files.sort((a, b) => a.name.localeCompare(b.name));
-        
-        // Cache the results
-        localStorage.setItem('nds-library', JSON.stringify({
-            files: files,
-            timestamp: Date.now()
-        }));
-        
-        return files;
-    } catch (error) {
-        console.error('Drive API error:', error);
-        throw new Error(`Failed to load ROMs: ${error.message}`);
-    }
-}
             
             const data = await response.json();
             
+            // The response from the proxy is the data we need directly
             if (!data.files || data.files.length === 0) {
                 throw new Error('No files found. Make sure the folder is public and contains .nds files');
             }
@@ -563,6 +530,13 @@ async function fetchDriveFolder() {
         if (lower.includes('phoenix wright')) return '⚖️';
         if (lower.includes('metroid')) return '🕷️';
         if (lower.includes('star fox')) return '🦊';
+        if (lower.includes('mega man')) return '🤖';
+        if (lower.includes('one piece')) return '🏴‍☠️';
+        if (lower.includes('dragon ball')) return '🐉';
+        if (lower.includes('bleach')) return '⚔️';
+        if (lower.includes('digimon')) return '🐉';
+        if (lower.includes('kingdom hearts')) return '🔑';
+        if (lower.includes('star wars')) return '⭐';
         return '🎮';
     }
     
